@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jam Digital dengan Latar Pemandangan dan Logo</title>
+  <style>
+    /* Reset dan styling dasar */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body, html {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      overflow: hidden;
+    }
+    /* Background pemandangan */
+    body {
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+    /* Overlay gelap agar teks terlihat */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 0;
+    }
+    /* Container utama */
+    .container {
+      position: relative;
+      height: 100vh;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Logo kiri atas */
+    .logo-kiri { 
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 80px;
+      height: 80px;
+      z-index: 2;
+    }
+    /* Logo kanan atas */
+    .logo-kanan {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 80px;
+      height: 80px;
+      z-index: 2;
+    }
+    /* Jam digital di tengah */
+    .clock {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 5rem;
+      font-weight: bold;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+      user-select: none;
+    }
+    /* Tanggal di bawah jam */
+    .date {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-bottom: 40px;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      .logo-kiri, .logo-kanan {
+        width: 50px;
+        height: 50px;
+      }
+      .clock {
+        font-size: 3rem;
+      }
+      .date {
+        font-size: 1rem;
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Logo Kaltara -->
+    <img src="provinsi.png" alt="Logo Kaltara" class="logo-kiri" />
+
+    <!-- Logo SMANSATAPA -->
+    <img src="logo.png" alt="Logo SMANSATAPA" class="logo-kanan" />
+
+    <!-- Jam Digital -->
+    <div class="clock" id="clock">--:--:--</div>
+    <div class="date" id="date"></div>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+
+      // Format jam: 2 digit
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const seconds = now.getSeconds().toString().padStart(2, '0');
+
+      // Update jam
+      document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+
+      // Format tanggal dalam bahasa Indonesia
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const dateString = now.toLocaleDateString('id-ID', options);
+      document.getElementById('date').textContent = dateString;
+    }
+
+    // Update setiap detik
+    setInterval(updateClock, 1000);
+    updateClock(); // panggil langsung saat load
+  </script>
+</body>
+</html>
